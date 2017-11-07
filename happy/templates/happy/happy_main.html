@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            background-color: #888888;
+        }
+    </style>
+</head>
+<body>
+
+<script src="{% static 'happy/js/mo.js' %}"></script> <!--经验啊，放到此处表明先全部加载mo.js，这非常重要-->
+<script src="{% static 'happy/js/mo_player.js' %}"></script>
+
+<script>
+
+{#    window.onload = function () {#}
+        'use strict';
+
+        //第一阶段，方形相向而行
+
+        function _defineProperty(obj, key, value) {
+            if (key in obj) {
+                Object.defineProperty(obj, key, {value: value, enumerable: true, configurable: true, writable: true});
+            } else {
+                obj[key] = value;
+            }
+            return obj;
+        }
+
+        var rect1 = new mojs.Shape({
+            shape: 'rect',
+            fill: 'none',
+            radius: 20,
+            stroke: 'cyan',
+            strokeWidth: {10: 0},
+            strokeDasharray: '100%',
+            strokeDashoffset: {'-100%': '100%'},
+            angle: {0: 180},
+            x: _defineProperty({}, -500, 0),
+            duration: 5000
+        });
+
+        var rect2 = new mojs.Shape({
+            shape: 'rect',
+            fill: 'none',
+            radius: 20,
+            stroke: 'cyan',
+            strokeWidth: {10: 0},
+            strokeDasharray: '100%',
+            strokeDashoffset: {'-100%': '100%'},
+            angle: {180: 0},
+            x: {500: 0},
+            duration: 5000
+
+            //        onComplete: function () {
+            //            burst1.replay();  // 引用了第二阶段的花
+            //            burst2.replay();
+            //        }
+        });
+
+        //第二阶段，螺旋飞花
+        var burst1 = new mojs.Burst({
+            radius: {0: 100},
+            count: 20,
+            children: {
+                shape: 'polygon',
+                points: 5,
+                fill: {'cyan': 'yellow'},
+                angle: {360: 0},
+                duration: 2000,
+                //            delay: 'stagger(0, 100)',
+                delay: 3000
+            }
+        });
+
+        var burst2 = new mojs.Burst({
+            radius: {0: 100},
+            count: 30,
+            //        timeline: {
+            //            delay: 3200,
+            //        },
+            //        repeat: 5,
+            children: {
+                shape: 'polygon',
+                points: 5,
+                fill: {'cyan': 'yellow'},
+                angle: {0: 360},
+                duration: 2000,
+                delay: 3200
+            }
+        });
+
+        var burst3 = new mojs.Burst({
+            radius: {0: 100},
+            count: 30,
+            timeline: {
+                delay: 3200
+            },
+            children: {
+                shape: 'polygon',
+                points: 5,
+                fill: {'cyan': 'yellow'},
+                angle: {0: 360},
+                duration: 2000,
+                delay: 'stagger(0, 100)'
+            }
+        });
+
+        //第三阶段，cake
+        var cake_delay = 7000;
+        var tuopan = new mojs.Shape({ //托盘层
+            shape: 'rect',
+            fill: 'brown',
+            stroke: 'brown',
+            radiusX: {0: 200},
+            //        angle: -5,
+            radiusY: {0: 5},
+            y: {0: 10},
+
+            delay: cake_delay
+
+        });
+
+        var step_y = 10;
+        var step_delay = 5000;
+        var layer1 = new mojs.Shape({
+            shape: 'circle',
+            fill: {'brown': 'purple'},
+            radius: {0: 150},
+            radiusY: {0: 15},
+            delay: cake_delay,
+            duration: 5000
+        }).then({
+            stroke: {'yellow': 'cyan'},
+            strokeWidth: 5,
+            repeat: 10,
+            isYoyo: true
+        });
+        var layer2 = new mojs.Shape({
+            shape: 'circle',
+            fill: {'purple': 'PapayaWhip'},
+            radius: {0: 150},
+            radiusY: {0: 15},
+            y: step_y * -1,
+            delay: cake_delay + step_delay,
+            duration: 5000
+        }).then({
+            stroke: {'cyan': 'yellow'},
+            strokeWidth: 5,
+            repeat: 10,
+            isYoyo: true
+
+        });
+        var layer3 = new mojs.Shape({
+            shape: 'circle',
+            fill: {'PapayaWhip': 'deeppink'},
+            radius: {0: 150},
+            radiusY: {0: 15},
+            y: step_y * -2,
+            delay: cake_delay + step_delay * 2,
+            duration: 5000
+        }).then({
+            stroke: {'yellow': 'cyan'},
+            strokeWidth: 5,
+            repeat: 10,
+            isYoyo: true
+        });
+        var layer4 = new mojs.Shape({
+            shape: 'circle',
+            fill: {'deeppink': 'green'},
+            radius: {0: 150},
+            radiusY: {0: 15},
+            y: step_y * -3,
+            delay: cake_delay + step_delay * 3,
+            duration: 5000
+        }).then({
+            stroke: {'cyan': 'yellow'},
+            strokeWidth: 5,
+            repeat: 10,
+            isYoyo: true
+        });
+        var layer5 = new mojs.Shape({
+            shape: 'circle',
+            fill: {'green': 'LightPink'},
+            radius: {0: 150},
+            radiusY: {0: 15},
+            y: step_y * -4,
+            delay: cake_delay + step_delay * 4,
+            duration: 5000
+        }).then({
+            stroke: {'yellow': 'cyan'},
+            strokeWidth: 5,
+            repeat: 10,
+            isYoyo: true
+        });
+
+        var timeline = new mojs.Timeline({});
+        timeline.add(rect1, rect2, burst1, burst2, burst3, tuopan, layer1, layer2, layer3, layer4, layer5);
+
+        new MojsPlayer({
+            add: timeline,
+            //        isRepeat: true,
+{#            isPlaying: true#}
+            //        isHidden: true
+        });
+
+{#    };#}
+
+
+</script>
+
+</body>
+</html>

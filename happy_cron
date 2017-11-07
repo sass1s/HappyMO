@@ -1,0 +1,2 @@
+1 0 * * * sh /root/CS/HappyMO/reload_uwsgi.sh >/dev/null 2>&1
+
